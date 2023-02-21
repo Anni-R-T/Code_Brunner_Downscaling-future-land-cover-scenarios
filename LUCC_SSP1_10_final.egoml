@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<script>
+    <property key="dff.charset" value="UTF-8" />
+    <property key="dff.date" value="2021-Jan-28 12:41:14" />
+    <property key="dff.version" value="5.1.0.20200615" />
+    <property key="submodel.import" value='AllocateTransitions { { &quot;lanscape&quot; : CategoricalMap, &quot;probabilities&quot; : Map, &quot;transitionMatrix&quot; : TransitionMatrix, &quot;percentOfTransitionsByExpansion&quot; : PercentMatrix, &quot;patchExpansionParameters&quot; : TransitionFunctionParameterMatrix, &quot;patchGenerationParameters&quot; : TransitionFunctionParameterMatrix } { &quot;printTransitionInfo&quot; : BooleanValue } { &quot;resultingLanscape&quot; : CategoricalMap } }' />
+    <functor name="LoadMap">
+        <property key="dff.functor.alias" value="Environmental data" />
+        <inputport name="filename">&quot;../final_model_input/env-bigroads-dflow-dstream.tif&quot;</inputport>
+        <inputport name="nullValue">.none</inputport>
+        <inputport name="storageMode">.default</inputport>
+        <inputport name="suffixDigits">0</inputport>
+        <inputport name="step">.none</inputport>
+        <inputport name="workdir">.none</inputport>
+        <outputport name="map" id="v1" />
+    </functor>
+    <functor name="LoadCategoricalMap">
+        <property key="dff.functor.alias" value="Initial Map 2005" />
+        <inputport name="filename">&quot;../input/LCLA_2005_1km.tif&quot;</inputport>
+        <inputport name="nullValue">.none</inputport>
+        <inputport name="storageMode">.default</inputport>
+        <inputport name="suffixDigits">0</inputport>
+        <inputport name="step">.none</inputport>
+        <inputport name="workdir">.none</inputport>
+        <outputport name="map" id="v2" />
+    </functor>
+    <functor name="LoadTable">
+        <property key="dff.functor.alias" value="Weights" />
+        <inputport name="filename">&quot;../final_model_input/all_weights_00-10_no_stream.csv&quot;</inputport>
+        <inputport name="uniqueIdKeyColumnCreation">.ifNecessary</inputport>
+        <inputport name="suffixDigits">0</inputport>
+        <inputport name="step">.none</inputport>
+        <inputport name="workdir">.none</inputport>
+        <outputport name="table" id="v3" />
+    </functor>
+    <functor name="Weights">
+        <property key="dff.functor.alias" value="weights695" />
+        <inputport name="constant" peerid="v3" />
+        <outputport name="object" id="v4" />
+    </functor>
+    <containerfunctor name="For">
+        <property key="dff.container.collapsed" value="no" />
+        <property key="dff.functor.alias" value="for674" />
+        <inputport name="firstIterationStep">1</inputport>
+        <inputport name="lastIterationStep">10</inputport>
+        <inputport name="stepIncrement">1</inputport>
+        <inputport name="sequenceInput">.none</inputport>
+        <internaloutputport name="step" id="v5" />
+        <functor name="Step">
+            <property key="dff.functor.alias" value="step675" />
+            <inputport name="step" peerid="v5" />
+        </functor>
+        <functor name="AllocateTransitions">
+            <property key="dff.functor.alias" value="Updated Landscape" />
+            <inputport name="lanscape" peerid="v7" />
+            <inputport name="probabilities" peerid="v10" />
+            <inputport name="transitionMatrix" peerid="v9" />
+            <inputport name="percentOfTransitionsByExpansion">[&#x0A;    1-&gt;2 0.949428096256322,&#x0A;    1-&gt;3 0.909604519774011,&#x0A;    1-&gt;4 0.724171699037049,&#x0A;    1-&gt;5 0.942571341525338,&#x0A;    2-&gt;1 0.745668497439571,&#x0A;    2-&gt;3 0.671776293032824,&#x0A;    2-&gt;4 0.610386965376782,&#x0A;    2-&gt;5 0.831728668646958,&#x0A;    3-&gt;1 0.877300613496933,&#x0A;    3-&gt;2 0.866272741408801,&#x0A;    3-&gt;4 0.688044831880448,&#x0A;    3-&gt;5 0.961728295169512,&#x0A;    4-&gt;1 0.785539415700996,&#x0A;    4-&gt;2 0.939918533604888,&#x0A;    4-&gt;3 0.842465753424658,&#x0A;    4-&gt;5 0.837709497206704,&#x0A;    5-&gt;1 0.793374019180471,&#x0A;    5-&gt;2 0.951502174840724,&#x0A;    5-&gt;3 0.870018452395217,&#x0A;    5-&gt;4 0.792877094972067&#x0A;]</inputport>
+            <inputport name="patchExpansionParameters">[&#x0A;    1-&gt;2 178.048008418129 308.037387054489 1,&#x0A;    1-&gt;3 124.195510622987 100.704501259129 1,&#x0A;    1-&gt;4 120.539542259097 84.9287703722078 1,&#x0A;    1-&gt;5 134.106795194954 154.893209241986 1,&#x0A;    2-&gt;1 292.462435022128 1655.26287905362 1,&#x0A;    2-&gt;3 196.309910574735 424.633434934036 1,&#x0A;    2-&gt;4 112.46850277495 79.2321554425916 1,&#x0A;    2-&gt;5 243.164515262779 1049.76507178868 1,&#x0A;    3-&gt;1 136.574654982628 136.146541184108 1,&#x0A;    3-&gt;2 121.507562174486 314.926146087457 1,&#x0A;    3-&gt;4 122.873822252982 95.4109546285481 1,&#x0A;    3-&gt;5 142.076752332331 196.178824642537 1,&#x0A;    4-&gt;1 118.438762237412 81.6937690108743 1,&#x0A;    4-&gt;2 104.25421638263 59.080210903558 1,&#x0A;    4-&gt;3 115.432825398564 85.6363293815669 1,&#x0A;    4-&gt;5 150.179011716235 197.317400507796 1,&#x0A;    5-&gt;1 136.509650387206 196.162173223073 1,&#x0A;    5-&gt;2 184.39989789194 454.848946964696 1,&#x0A;    5-&gt;3 192.548612303407 426.327550158599 1,&#x0A;    5-&gt;4 155.405301479386 205.270062079668 1&#x0A;]</inputport>
+            <inputport name="patchGenerationParameters">[&#x0A;    1-&gt;2 118.477848360883 100.278421028248 1,&#x0A;    1-&gt;3 99.2482533505076 39.6890143944274 1,&#x0A;    1-&gt;4 98.2853649462878 38.179187126696 1,&#x0A;    1-&gt;5 96.5405388204367 39.1340868743423 1,&#x0A;    2-&gt;1 160.27466262506 239.06912793691 1,&#x0A;    2-&gt;3 123.649733052357 125.58166294679 1,&#x0A;    2-&gt;4 97.5854280974187 37.2277995051858 1,&#x0A;    2-&gt;5 122.925938252877 106.896540348675 1,&#x0A;    3-&gt;1 106.494254148222 97.88774112828 1,&#x0A;    3-&gt;2 105.003161709864 78.7848290649674 1,&#x0A;    3-&gt;4 94.0261885541683 33.3542781898639 1,&#x0A;    3-&gt;5 96.1163693003765 35.9737500441678 1,&#x0A;    4-&gt;1 98.2996384709452 39.7164294005213 1,&#x0A;    4-&gt;2 88.9720792488964 15.8160515180235 1,&#x0A;    4-&gt;3 97.3015094868491 38.8284512933916 1,&#x0A;    4-&gt;5 103.503586492867 49.8666108265085 1,&#x0A;    5-&gt;1 101.135553912891 47.8543575250903 1,&#x0A;    5-&gt;2 119.541319014992 98.5978347860357 1,&#x0A;    5-&gt;3 115.717488030519 94.1912763369131 1,&#x0A;    5-&gt;4 101.329778650379 46.9149718399509 1&#x0A;]</inputport>
+            <inputport name="printTransitionInfo">.no</inputport>
+            <outputport name="resultingLanscape" id="v6" />
+        </functor>
+        <functor name="MuxCategoricalMap">
+            <property key="dff.functor.alias" value="Returned Landscape" />
+            <inputport name="initial" peerid="v2" />
+            <inputport name="feedback" peerid="v6" />
+            <outputport name="map" id="v7" />
+        </functor>
+        <functor name="SaveMap">
+            <property key="dff.functor.alias" value="saveMap687" />
+            <inputport name="map" peerid="v6" />
+            <inputport name="filename">&quot;../final_model_output/SSP1/SSP1_.tif&quot;</inputport>
+            <inputport name="suffixDigits">2</inputport>
+            <inputport name="step" peerid="v5" />
+            <inputport name="useCompression">.yes</inputport>
+            <inputport name="workdir">.none</inputport>
+            <inputport name="ignoreCostlySparseCategories">.yes</inputport>
+        </functor>
+        <functor name="CalcDistanceMap">
+            <property key="dff.functor.alias" value="calcDistanceMap688" />
+            <inputport name="categoricalMap" peerid="v7" />
+            <inputport name="categories">[ 1, 2, 3, 4, 5 ]</inputport>
+            <inputport name="cellType">.int32</inputport>
+            <inputport name="nullValue">.default</inputport>
+            <inputport name="truncateDistance">.no</inputport>
+            <outputport name="distance" id="v8" />
+        </functor>
+        <containerfunctor name="SelectTransitionMatrix">
+            <property key="dff.container.collapsed" value="yes" />
+            <property key="dff.functor.alias" value="selectTransitionMatrix655" />
+            <inputport name="step" peerid="v5" />
+            <outputport name="transitionMatrix" id="v9" />
+            <functor name="NumberTransitionMatrix">
+                <property key="dff.functor.alias" value="numberTransitionMatrix656" />
+                <inputport name="transitionMatrix">[&#x0A;    1-&gt;2 0.000293411448405,&#x0A;    1-&gt;3 0.00117364579362,&#x0A;    1-&gt;4 0.002229927007877,&#x0A;    1-&gt;5 0.034798597780821,&#x0A;    2-&gt;1 0.002051800877665,&#x0A;    2-&gt;3 0.000889113713655,&#x0A;    2-&gt;4 0.000193781194002,&#x0A;    2-&gt;5 0.021258936871363,&#x0A;    3-&gt;1 3.23717658539182e-06,&#x0A;    3-&gt;2 9.71152975617546e-05,&#x0A;    3-&gt;4 0.000291345892685,&#x0A;    3-&gt;5 0.026253502107528,&#x0A;    5-&gt;1 0.001234490642922,&#x0A;    5-&gt;2 7.71556651826371e-05,&#x0A;    5-&gt;3 0.000586383055388,&#x0A;    5-&gt;4 0.000694400986644&#x0A;]</inputport>
+                <inputport name="matrixNumber">2</inputport>
+            </functor>
+            <functor name="NumberTransitionMatrix">
+                <property key="dff.functor.alias" value="numberTransitionMatrix690" />
+                <inputport name="transitionMatrix">[&#x0A;    1-&gt;2 2.98812519049298e-05,&#x0A;    1-&gt;3 0.002988125190493,&#x0A;    1-&gt;4 0.000298812519049,&#x0A;    1-&gt;5 0.002390500152394,&#x0A;    2-&gt;1 0.003509401383579,&#x0A;    2-&gt;3 0.001962125374205,&#x0A;    2-&gt;4 4.48485799818363e-05,&#x0A;    2-&gt;5 0.010875780645595,&#x0A;    3-&gt;1 0.001627678344716,&#x0A;    3-&gt;2 1.62767834471623e-05,&#x0A;    3-&gt;4 9.76607006829738e-05,&#x0A;    3-&gt;5 0.001302142675773,&#x0A;    5-&gt;1 0.000642226552465,&#x0A;    5-&gt;2 1.5664062255249e-06,&#x0A;    5-&gt;3 0.00062656249021,&#x0A;    5-&gt;4 7.83203112762451e-05&#x0A;]</inputport>
+                <inputport name="matrixNumber">1</inputport>
+            </functor>
+            <functor name="NumberTransitionMatrix">
+                <property key="dff.functor.alias" value="numberTransitionMatrix691" />
+                <inputport name="transitionMatrix">[&#x0A;    1-&gt;2 0.00494459922333,&#x0A;    1-&gt;3 0.001977839689332,&#x0A;    1-&gt;4 1.64819974111005e-05,&#x0A;    1-&gt;5 0.016069947475823,&#x0A;    2-&gt;1 0.001175322732936,&#x0A;    2-&gt;3 1.05779045964257e-05,&#x0A;    2-&gt;4 2.35064546587239e-06,&#x0A;    2-&gt;5 0.000117532273294,&#x0A;    3-&gt;1 0.031338748365572,&#x0A;    3-&gt;2 0.008242520118068,&#x0A;    3-&gt;4 2.57578753689636e-05,&#x0A;    3-&gt;5 0.012878937684482,&#x0A;    4-&gt;1 0.013638103216066,&#x0A;    4-&gt;2 0.009546672251246,&#x0A;    4-&gt;3 0.024548585788919,&#x0A;    4-&gt;5 0.028640016753739,&#x0A;    5-&gt;1 0.002810353357851,&#x0A;    5-&gt;2 0.006922344060392,&#x0A;    5-&gt;3 0.000991019341979,&#x0A;    5-&gt;4 8.8748000774257e-06&#x0A;]</inputport>
+                <inputport name="matrixNumber">10</inputport>
+            </functor>
+            <functor name="NumberTransitionMatrix">
+                <property key="dff.functor.alias" value="numberTransitionMatrix693" />
+                <inputport name="transitionMatrix">[&#x0A;    1-&gt;2 0.00222176860323,&#x0A;    1-&gt;3 4.44353720645972e-05,&#x0A;    1-&gt;4 2.22176860322986e-05,&#x0A;    1-&gt;5 4.44353720645972e-05,&#x0A;    2-&gt;1 0.00374385221445,&#x0A;    2-&gt;3 1.17731201712276e-05,&#x0A;    2-&gt;4 3.53193605136827e-06,&#x0A;    2-&gt;5 0.000459151686678,&#x0A;    3-&gt;1 0.034284241110401,&#x0A;    3-&gt;2 0.007183364804084,&#x0A;    3-&gt;4 2.85702009253343e-05,&#x0A;    3-&gt;5 0.011672967806637,&#x0A;    4-&gt;1 0.010292435603323,&#x0A;    4-&gt;2 0.0083626039277,&#x0A;    4-&gt;3 0.018011762305816,&#x0A;    4-&gt;5 0.023157980107478,&#x0A;    5-&gt;1 0.009521857250888,&#x0A;    5-&gt;2 0.003955233011907,&#x0A;    5-&gt;3 0.001171920892417,&#x0A;    5-&gt;4 1.0254307808649e-05&#x0A;]</inputport>
+                <inputport name="matrixNumber">9</inputport>
+            </functor>
+            <functor name="NumberTransitionMatrix">
+                <property key="dff.functor.alias" value="numberTransitionMatrix539" />
+                <inputport name="transitionMatrix">[&#x0A;    1-&gt;2 0.000660843570309,&#x0A;    1-&gt;3 0.002523220904816,&#x0A;    1-&gt;4 0.000660843570309,&#x0A;    1-&gt;5 0.053648482571447,&#x0A;    2-&gt;1 0.00142522032838,&#x0A;    2-&gt;3 0.000876160037939,&#x0A;    2-&gt;4 8.29431502581786e-05,&#x0A;    2-&gt;5 0.015233502526291,&#x0A;    3-&gt;1 9.93259353613816e-05,&#x0A;    3-&gt;2 0.000297977806084,&#x0A;    3-&gt;4 0.000231760515843,&#x0A;    3-&gt;5 0.02446728874402,&#x0A;    5-&gt;1 0.001472638759609,&#x0A;    5-&gt;2 0.000132537488365,&#x0A;    5-&gt;3 0.000147263875961,&#x0A;    5-&gt;4 0.001030847131726&#x0A;]</inputport>
+                <inputport name="matrixNumber">3</inputport>
+            </functor>
+            <functor name="NumberTransitionMatrix">
+                <property key="dff.functor.alias" value="numberTransitionMatrix540" />
+                <inputport name="transitionMatrix">[&#x0A;    1-&gt;2 0.001470694129785,&#x0A;    1-&gt;3 9.8046275319027e-05,&#x0A;    1-&gt;4 2.94138825957081e-05,&#x0A;    1-&gt;5 0.000245115688298,&#x0A;    2-&gt;1 0.00377592179394,&#x0A;    2-&gt;3 1.17997556060617e-05,&#x0A;    2-&gt;4 4.71990224242467e-06,&#x0A;    2-&gt;5 0.000342192912576,&#x0A;    3-&gt;1 0.040533038131175,&#x0A;    3-&gt;2 0.00762656018323,&#x0A;    3-&gt;4 3.09708027745369e-05,&#x0A;    3-&gt;5 0.004142344871094,&#x0A;    4-&gt;1 0.008645124879803,&#x0A;    4-&gt;2 0.006792598119845,&#x0A;    4-&gt;3 0.010497651639761,&#x0A;    4-&gt;5 0.017290249759606,&#x0A;    5-&gt;1 0.011127227803445,&#x0A;    5-&gt;2 0.004479793011777,&#x0A;    5-&gt;3 0.000144509451993,&#x0A;    5-&gt;4 1.15607561594232e-05&#x0A;]</inputport>
+                <inputport name="matrixNumber">8</inputport>
+            </functor>
+            <functor name="NumberTransitionMatrix">
+                <property key="dff.functor.alias" value="numberTransitionMatrix541" />
+                <inputport name="transitionMatrix">[&#x0A;    1-&gt;2 0.001256828766232,&#x0A;    1-&gt;3 0.002387974655841,&#x0A;    1-&gt;4 0.000691255821428,&#x0A;    1-&gt;5 0.015710359577901,&#x0A;    2-&gt;1 0.003328489413891,&#x0A;    2-&gt;3 0.000451723563314,&#x0A;    2-&gt;4 8.32122353472739e-05,&#x0A;    2-&gt;5 0.002971865548117,&#x0A;    3-&gt;1 0.003415392136102,&#x0A;    3-&gt;2 0.000676315274476,&#x0A;    3-&gt;4 0.000202894582343,&#x0A;    3-&gt;5 0.003381576372379,&#x0A;    5-&gt;1 0.014507650193395,&#x0A;    5-&gt;2 0.001797533243474,&#x0A;    5-&gt;3 0.001075689185071,&#x0A;    5-&gt;4 0.000636921228003&#x0A;]</inputport>
+                <inputport name="matrixNumber">4</inputport>
+            </functor>
+            <functor name="NumberTransitionMatrix">
+                <property key="dff.functor.alias" value="numberTransitionMatrix542" />
+                <inputport name="transitionMatrix">[&#x0A;    1-&gt;2 0.001124729526004,&#x0A;    1-&gt;3 0.000374909842001,&#x0A;    1-&gt;4 4.82026939715958e-05,&#x0A;    1-&gt;5 0.000482026939716,&#x0A;    2-&gt;1 0.002261890402141,&#x0A;    2-&gt;3 1.18423581263924e-05,&#x0A;    2-&gt;4 8.28965068847469e-06,&#x0A;    2-&gt;5 0.000118423581264,&#x0A;    3-&gt;1 0.035564209156428,&#x0A;    3-&gt;2 0.009909531963091,&#x0A;    3-&gt;4 3.67019702336718e-05,&#x0A;    3-&gt;5 0.007340394046734,&#x0A;    4-&gt;1 0.004832495150784,&#x0A;    4-&gt;2 0.003624371363088,&#x0A;    4-&gt;3 0.007248742726176,&#x0A;    4-&gt;5 0.010873114089265,&#x0A;    5-&gt;1 0.008610544684308,&#x0A;    5-&gt;2 0.003065984296908,&#x0A;    5-&gt;3 0.000143270294248,&#x0A;    5-&gt;4 1.43270294248057e-05&#x0A;]</inputport>
+                <inputport name="matrixNumber">7</inputport>
+            </functor>
+            <functor name="NumberTransitionMatrix">
+                <property key="dff.functor.alias" value="numberTransitionMatrix543" />
+                <inputport name="transitionMatrix">[&#x0A;    1-&gt;2 0.006294024247316,&#x0A;    1-&gt;3 0.00058822656517,&#x0A;    1-&gt;4 0.000470581252136,&#x0A;    1-&gt;5 0.001882325008543,&#x0A;    2-&gt;1 0.001075137484559,&#x0A;    2-&gt;3 5.97298602532811e-05,&#x0A;    2-&gt;4 9.55677764052498e-05,&#x0A;    2-&gt;5 0.00035837916152,&#x0A;    3-&gt;1 0.011119898579294,&#x0A;    3-&gt;2 0.007119447261133,&#x0A;    3-&gt;4 0.000305119168334,&#x0A;    3-&gt;5 0.004746298174089,&#x0A;    5-&gt;1 0.007144493253291,&#x0A;    5-&gt;2 0.003357911829047,&#x0A;    5-&gt;3 0.000142889865066,&#x0A;    5-&gt;4 0.000142889865066&#x0A;]</inputport>
+                <inputport name="matrixNumber">5</inputport>
+            </functor>
+            <functor name="NumberTransitionMatrix">
+                <property key="dff.functor.alias" value="numberTransitionMatrix544" />
+                <inputport name="transitionMatrix">[&#x0A;    1-&gt;2 0.003096686179283,&#x0A;    1-&gt;3 0.000506730465701,&#x0A;    1-&gt;4 5.63033850778673e-05,&#x0A;    1-&gt;5 0.001689101552336,&#x0A;    2-&gt;1 0.00118864222466,&#x0A;    2-&gt;3 2.37728444931927e-05,&#x0A;    2-&gt;4 1.18864222465963e-05,&#x0A;    2-&gt;5 0.001069778002194,&#x0A;    3-&gt;1 0.024762268605145,&#x0A;    3-&gt;2 0.012138366963306,&#x0A;    3-&gt;4 6.93620969331777e-05,&#x0A;    3-&gt;5 0.018866490365824,&#x0A;    4-&gt;1 0.002409400372052,&#x0A;    4-&gt;2 0.001204700186026,&#x0A;    4-&gt;3 0.001204700186026,&#x0A;    4-&gt;5 0.004818800744103,&#x0A;    5-&gt;1 0.002722112869888,&#x0A;    5-&gt;2 0.001440271359729,&#x0A;    5-&gt;3 0.000144027135973,&#x0A;    5-&gt;4 2.88054271945777e-05&#x0A;]</inputport>
+                <inputport name="matrixNumber">6</inputport>
+            </functor>
+        </containerfunctor>
+        <containerfunctor name="CalcWOfEProbabilityMap">
+            <property key="dff.container.collapsed" value="no" />
+            <property key="dff.functor.alias" value="Probabilities" />
+            <inputport name="landscape" peerid="v7" />
+            <inputport name="weights" peerid="v4" />
+            <inputport name="transitions">[ 1-&gt;2, 1-&gt;3, 1-&gt;4, 1-&gt;5, 2-&gt;1, 2-&gt;3, 2-&gt;4, 2-&gt;5, 3-&gt;1, 3-&gt;2, 3-&gt;4, 3-&gt;5, 4-&gt;1, 4-&gt;2, 4-&gt;3, 4-&gt;5, 5-&gt;1, 5-&gt;2, 5-&gt;3, 5-&gt;4 ]</inputport>
+            <inputport name="cellType">.uint8</inputport>
+            <inputport name="nullValue">.default</inputport>
+            <outputport name="probabilities" id="v10" />
+            <functor name="NameMap">
+                <property key="dff.functor.alias" value="nameMap685" />
+                <inputport name="map" peerid="v8" />
+                <inputport name="mapName">&quot;distance&quot;</inputport>
+            </functor>
+            <functor name="NameMap">
+                <property key="dff.functor.alias" value="nameMap689" />
+                <inputport name="map" peerid="v1" />
+                <inputport name="mapName">&quot;env_data&quot;</inputport>
+            </functor>
+        </containerfunctor>
+    </containerfunctor>
+</script>
