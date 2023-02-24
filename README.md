@@ -3,6 +3,8 @@
 
 **Code_Landcover_expl.md**: Code for cropping, reclassification, resampling of the land-cover maps with gdal, grass Gis and pk-tools as well as area calculation of the single land-cover classes 
 
+**Code_fish_expl.md** R code for exploring the species data
+
 **Data_prep_SDM.R & Data_prep_SDM_full.R**: Preparation of environmental data for the SDM (full= wider range of variables with correlation check) 
 
 **Graphs_env_species.R**:  Code for creating the graphs showing the mean environmental conditions of species habitats
