@@ -1,5 +1,6 @@
 # Code_Brunner_Downscaling-future-land-cover-scenarios
 ## Code used for the analysis in "Downscaling future land cover scenarios for freshwater fish distribution models under climate change"
+<https://glowabio.org/publication/2024_brunner_downscaling_future_landcover/>
 
 **Code_Landcover_expl.md**: Code for cropping, reclassification, resampling of the land-cover maps with gdal, grass Gis and pk-tools as well as area calculation of the single land-cover classes 
 
